@@ -17,7 +17,7 @@ aques_path = home_path + 'speak_api/lib/aquestalkpi/AquesTalkPi'
 
 def say(message):
     voice_process = subprocess.Popen([aques_path] + message.split(), stdout=subprocess.PIPE)
-    subprocess.Popen(['aplay', '-D', 'hw:2'], stdin=voice_process.stdout)
+    subprocess.Popen(['aplay'], stdin=voice_process.stdout)
     return 'message: ' + message
 
 
@@ -43,15 +43,21 @@ def main():
             for xml_text in xmls:
                 try:
                     root = ET.fromstring(xml_text)
+                    for word in root.iter('WHYPO'):
+                        command = word.get('WORD')
+                        start(command)
                     print(root)
                 except ET.ParseError:
                     print('parce error--')
                     print(xml_text)
                     print('--')
     
+def start(q):
+    say(q)
 
 def fix_format_xml(text):
     return "".join(text.split("\n")[:-2])
+
 
 if __name__ == '__main__':
     main()
