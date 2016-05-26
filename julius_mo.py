@@ -56,15 +56,22 @@ def main():
                         cm = float(word.get('CM'))
                         print()
                         print(command + ": [" + str(cm) + "]")
-                        if command == 'start' and cm > 0.90:
+                        if cm < 0.50:
+                            print('skip')
+                            continue
+                        if command == 'start':
+                            if cm <= 0.94 or is_state_recieve:
+                                continue
                             is_state_recieve = True
                             say('はい')
+                            break
                         elif is_state_recieve:
-                            is_state_recieve = False
-                            if cm >= 0.4:
-                                start(command)
+                            if cm < 0.80:
+                                say('え？')
+                                break
                             else:
-                                say('わかりません')
+                                start(command)
+                                is_state_recieve = False
                 except ET.ParseError:
                     print()
                     print('parce error--')
