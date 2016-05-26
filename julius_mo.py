@@ -14,6 +14,7 @@ app = Flask(__name__)
 
 home_path = '/home/pi/'
 aques_path = home_path + 'speak_api/lib/aquestalkpi/AquesTalkPi'
+absolute_script_path = home_path + 'run_duo.py'
 
 def say(message):
     print('echo >: ' +  message)
@@ -21,6 +22,9 @@ def say(message):
     subprocess.Popen(['aplay'], stdin=voice_process.stdout)
     return 'message: ' + message
 
+def run_absolute():
+    print('absolute')
+    subprocess.Popen(['python2', absolute_script_path])
 
 def main():
     host = 'localhost'
@@ -78,7 +82,7 @@ def start(q):
     elif q == 'run_make_coffee':
         say('コーヒーはまだコントロールできません')
     elif q == 'absolute_duo':
-        say('あぶそりゅーとでゅお')
+        run_absolute()
 
 def date_text():
     now = datetime.datetime.now()
