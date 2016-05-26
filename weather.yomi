@@ -3,6 +3,5 @@ how_weather    きょうのてんきは
 what_day  きょうはなんようび
 what_date  きょうのひづけ
 is_sasago きょうはささごのひ
-run_make_coffee  こーひーいれて
-run_light_on  でんきつけて
-run_light_off でんきけして
+run_make_coffee  こーひーをいれて
+absolute_duo    あぶそりゅーとでゅお

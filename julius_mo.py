@@ -5,6 +5,7 @@ import socket
 from contextlib import closing
 import commands
 import xml.etree.ElementTree as ET
+import datetime
 
 # say
 import subprocess
@@ -14,8 +15,8 @@ app = Flask(__name__)
 home_path = '/home/pi/'
 aques_path = home_path + 'speak_api/lib/aquestalkpi/AquesTalkPi'
 
-
 def say(message):
+    print('echo >: ' +  message)
     voice_process = subprocess.Popen([aques_path] + message.split(), stdout=subprocess.PIPE)
     subprocess.Popen(['aplay'], stdin=voice_process.stdout)
     return 'message: ' + message
@@ -41,41 +42,53 @@ def main():
             parts = text_queue.split(separator)
             xmls, text_queue = parts[:-1], parts[-1]
             # print(xmls)
-            print(">")
+            print(".", end="")
             # 前回受け取ったコマンドが 'start' であるか
             for xml_text in xmls:
                 try:
                     root = ET.fromstring(xml_text)
                     for word in root.iter('WHYPO'):
-                        print(word)
-                        print(word.attrib)
                         command = word.get('WORD')
-                        print(is_state_recieve)
-                        if command == 'start':
+                        cm = float(word.get('CM'))
+                        print()
+                        print(command + ": [" + str(cm) + "]")
+                        if command == 'start' and cm > 0.90:
                             is_state_recieve = True
                             say('はい')
                         elif is_state_recieve:
                             is_state_recieve = False
-                            start(command)
+                            if cm >= 0.4:
+                                start(command)
+                            else:
+                                say('わかりません')
                 except ET.ParseError:
+                    print()
                     print('parce error--')
                     print(xml_text)
                     print('--')
-    
+
 # Commands
 def start(q):
     if q == 'how_weather':
-        say('天気は晴れです')
+        say('天気は晴れです(適当)')
     elif q in ['what_day', 'what_date']:
-        say('今日は月曜日です')
+        say('今日は' + date_text() + "です")
     elif q == 'is_sasago':
-        say('今日は笹子の日です')
+        say('今日は笹子の日' + ('です' if is_sasago_day() else 'ではないです' ))
     elif q == 'run_make_coffee':
         say('コーヒーはまだコントロールできません')
-    elif q == 'run_light_on':
-        say('電気はまだコントロールできません')
-    elif q == 'run_light_off':
-        say('電気はまだコントロールできません')
+    elif q == 'absolute_duo':
+        say('あぶそりゅーとでゅお')
+
+def date_text():
+    now = datetime.datetime.now()
+    # NOTE: strftime は 0埋めされる
+    day_str = '日,月,火,水,木,金,土'.split(',')[now.weekday()]
+    return str(now.month) + '月' + str(now.day) + '日の' + day_str + '曜日'
+
+def is_sasago_day():
+    now = datetime.datetime.now()
+    return now.day % 10 == 5
 
 def fix_format_xml(text):
     return "".join(text.split("\n")[:-2])
