@@ -94,7 +94,7 @@ def start(q):
 def date_text():
     now = datetime.datetime.now()
     # NOTE: strftime は 0埋めされる
-    day_str = '日,月,火,水,木,金,土'.split(',')[now.weekday()]
+    day_str = '月,火,水,木,金,土,日'.split(',')[now.weekday()]
     return str(now.month) + '月' + str(now.day) + '日の' + day_str + '曜日'
 
 def is_sasago_day():
