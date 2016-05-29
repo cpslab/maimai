@@ -19,7 +19,7 @@ akane_path = '/home/pi/akane-chan/main.py'
 python3_path = '/usr/bin/python3'
 absolute_script_path = home_path + 'run_duo.py'
 
-food_list = ['かみなり', '松屋', '松々家', 'あぶり', 'ささご', '丼丸', 'てんや', 'カレー桜', 'イイトコ', 'ここのつ', 'かあちゃん', 'セブンイレブン', '学食', 'すた丼', 'おと', 'くらみそ', 'すき家', 'はなの舞', 'フードコート', '餃子太郎', 'つるかめ', 'らぼで自炊', 'いぶと']
+food_list = ['かみなり', 'まつや', 'まつのや', 'あぶり', 'ささご', 'どんまる', 'てんや', 'カレー桜', 'イイトコ', 'ここのつ', 'かあちゃん', 'セブンイレブン', '学食', 'すた丼', 'おと', 'くらみそ', 'すき家', 'はなの舞', 'フードコート', '餃子太郎', 'つるかめ', 'らぼで自炊', 'いぶと']
 
 
 def say(message):
@@ -97,7 +97,7 @@ def start(q):
     elif q == 'absolute_duo':
         run_absolute()
     elif q == 'random_food':
-        say(random_food() + 'がおすすめ')
+        say('今日のごはんは' + random_food() + 'がおすすめ')
 
 def random_food():
     return random.choice(food_list)
