@@ -27,7 +27,7 @@ food_list = ['かみなり', 'まつや', 'まつのや', 'あぶり', 'ささ�
 def say(message):
     print('echo >: ' +  message)
     # voice_process = subprocess.Popen([python3_path, akane_path] + message.split(), stdout=subprocess.PIPE)
-    subprocess.Popen([python3_path, akane_path, message, "2.0", "1.0", "1.0", "1.0"])
+    subprocess.Popen([python3_path, akane_path, message, "2.0", "1.4", "1.0", "1.0"])
     return 'message: ' + message
 
 def run_absolute():
