@@ -100,12 +100,18 @@ def start(q):
     elif q == 'random_food':
         say('今日のごはんは' + random_food() + 'がおすすめ')
     elif q == 'coffee_run':
-        say('おいしいコーヒーを入れますね')
-        time.sleep(4)
-        requests.get('http://192.168.1.47/coffee/0')
+        try:
+            say('おいしいコーヒーを入れますね')
+            time.sleep(4)
+            requests.get('http://192.168.1.47/coffee/0')
+        except requests.exceptions.ConnectionError:
+            say('働きたくでござる')
     elif q == 'coffee_stop':
-        requests.get('http://192.168.1.47/coffee/1')
-        say('コーヒーをちゅうだんしました')
+        try:
+            requests.get('http://192.168.1.47/coffee/1')
+            say('コーヒーをちゅうだんしました')
+        except requests.exceptions.ConnectionError:
+            say('働きたくでござる')
 
 def random_food():
     return random.choice(food_list)
