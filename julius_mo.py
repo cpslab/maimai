@@ -6,6 +6,7 @@ from contextlib import closing
 import commands
 import xml.etree.ElementTree as ET
 import datetime
+import random
 
 # say
 import subprocess
@@ -14,12 +15,17 @@ app = Flask(__name__)
 
 home_path = '/home/pi/'
 aques_path = home_path + 'speak_api/lib/aquestalkpi/AquesTalkPi'
+akane_path = '/home/pi/akane-chan/main.py'
+python3_path = '/usr/bin/python3'
 absolute_script_path = home_path + 'run_duo.py'
+
+food_list = ['かみなり', 'まつや', 'まつのや', 'あぶり', 'ささご', 'どんまる', 'てんや', 'カレー桜', 'イイトコ', 'ここのつ', 'かあちゃん', 'セブンイレブン', '学食', 'すた丼', 'おと', 'くらみそ', 'すき家', 'はなの舞', 'フードコート', '餃子太郎', 'つるかめ', 'らぼで自炊', 'いぶと']
+
 
 def say(message):
     print('echo >: ' +  message)
-    voice_process = subprocess.Popen([aques_path] + message.split(), stdout=subprocess.PIPE)
-    subprocess.Popen(['aplay'], stdin=voice_process.stdout)
+    # voice_process = subprocess.Popen([python3_path, akane_path] + message.split(), stdout=subprocess.PIPE)
+    subprocess.Popen([python3_path, akane_path, message, "2.0", "1.0", "1.0", "1.0"])
     return 'message: ' + message
 
 def run_absolute():
@@ -90,11 +96,16 @@ def start(q):
         say('コーヒーはまだコントロールできません')
     elif q == 'absolute_duo':
         run_absolute()
+    elif q == 'random_food':
+        say('今日のごはんは' + random_food() + 'がおすすめ')
+
+def random_food():
+    return random.choice(food_list)
 
 def date_text():
     now = datetime.datetime.now()
     # NOTE: strftime は 0埋めされる
-    day_str = '日,月,火,水,木,金,土'.split(',')[now.weekday()]
+    day_str = '月,火,水,木,金,土,日'.split(',')[now.weekday()]
     return str(now.month) + '月' + str(now.day) + '日の' + day_str + '曜日'
 
 def is_sasago_day():
