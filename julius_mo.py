@@ -112,6 +112,8 @@ def start(q):
             say('コーヒーをちゅうだんしました')
         except requests.exceptions.ConnectionError:
             say('働きたくでござる')
+    elif q == 'cancel':
+        say('了解どすえー')
 
 def random_food():
     return random.choice(food_list)
