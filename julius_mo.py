@@ -8,6 +8,7 @@ import xml.etree.ElementTree as ET
 import datetime
 import time
 import random
+import requests
 
 # say
 import subprocess
@@ -43,6 +44,7 @@ def main():
     text_queue = ""
     separator = ".\n"
     is_state_recieve = False
+    say('まいまい起動しました')
 
     while True:
         recv_data = sock.recv(bufsize)
