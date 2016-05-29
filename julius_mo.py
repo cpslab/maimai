@@ -6,6 +6,7 @@ from contextlib import closing
 import commands
 import xml.etree.ElementTree as ET
 import datetime
+import time
 import random
 
 # say
@@ -92,12 +93,17 @@ def start(q):
         say('今日は' + date_text() + "です")
     elif q == 'is_sasago':
         say('今日は笹子の日' + ('です' if is_sasago_day() else 'ではないです' ))
-    elif q == 'run_make_coffee':
-        say('コーヒーはまだコントロールできません')
     elif q == 'absolute_duo':
         run_absolute()
     elif q == 'random_food':
         say('今日のごはんは' + random_food() + 'がおすすめ')
+    elif q == 'coffee_run':
+        say('おいしいコーヒーを入れますね')
+        time.sleep(4)
+        requests.get('http://192.168.1.47/coffee/0')
+    elif q == 'coffee_stop':
+        requests.get('http://192.168.1.47/coffee/1')
+        say('コーヒーをちゅうだんしました')
 
 def random_food():
     return random.choice(food_list)
