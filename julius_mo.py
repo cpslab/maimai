@@ -6,6 +6,7 @@ from contextlib import closing
 import commands
 import xml.etree.ElementTree as ET
 import datetime
+import random
 
 # say
 import subprocess
@@ -15,6 +16,9 @@ app = Flask(__name__)
 home_path = '/home/pi/'
 aques_path = home_path + 'speak_api/lib/aquestalkpi/AquesTalkPi'
 absolute_script_path = home_path + 'run_duo.py'
+
+food_list = ['かみなり', '松屋', '松々家', 'あぶり', 'ささご', '丼丸', 'てんや', 'カレー桜', 'イイトコ', 'ここのつ', 'かあちゃん', 'セブンイレブン', '学食', 'すた丼', 'おと', 'くらみそ', 'すき家', 'はなの舞', 'フードコート', '餃子太郎', 'つるかめ', 'らぼで自炊', 'いぶと']
+
 
 def say(message):
     print('echo >: ' +  message)
@@ -90,6 +94,11 @@ def start(q):
         say('コーヒーはまだコントロールできません')
     elif q == 'absolute_duo':
         run_absolute()
+    elif q == 'random_food':
+        say(random_food() + 'がおすすめ')
+
+def random_food():
+    return random.choice(food_list)
 
 def date_text():
     now = datetime.datetime.now()
