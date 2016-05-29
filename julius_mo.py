@@ -15,6 +15,8 @@ app = Flask(__name__)
 
 home_path = '/home/pi/'
 aques_path = home_path + 'speak_api/lib/aquestalkpi/AquesTalkPi'
+akane_path = '/home/pi/akane-chan/main.py'
+python3_path = '/usr/bin/python3'
 absolute_script_path = home_path + 'run_duo.py'
 
 food_list = ['かみなり', '松屋', '松々家', 'あぶり', 'ささご', '丼丸', 'てんや', 'カレー桜', 'イイトコ', 'ここのつ', 'かあちゃん', 'セブンイレブン', '学食', 'すた丼', 'おと', 'くらみそ', 'すき家', 'はなの舞', 'フードコート', '餃子太郎', 'つるかめ', 'らぼで自炊', 'いぶと']
@@ -22,8 +24,8 @@ food_list = ['かみなり', '松屋', '松々家', 'あぶり', 'ささご', '�
 
 def say(message):
     print('echo >: ' +  message)
-    voice_process = subprocess.Popen([aques_path] + message.split(), stdout=subprocess.PIPE)
-    subprocess.Popen(['aplay'], stdin=voice_process.stdout)
+    # voice_process = subprocess.Popen([python3_path, akane_path] + message.split(), stdout=subprocess.PIPE)
+    subprocess.Popen([python3_path, akane_path] + message.split())
     return 'message: ' + message
 
 def run_absolute():
