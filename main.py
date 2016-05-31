@@ -103,9 +103,9 @@ def main():
 # Commands
 def start(q):
     if q == 'how_weather':
-        say('天気は晴れです(適当)')
-    elif q in ['what_day', 'what_date']:
         run_weather()
+    elif q in ['what_day', 'what_date']:
+        say('今日は' + date_text() + "です")
     elif q == 'is_sasago':
         say('今日は笹子の日' + ('です' if is_sasago_day() else 'ではないです' ))
     elif q == 'absolute_duo':
@@ -127,6 +127,10 @@ def start(q):
             say('働きたくないでござる')
     elif q == 'cancel':
         say('了解どすえー')
+    elif q == 'good_night':
+        say('おやすみなさい，よいゆめを')
+    elif q == 'hello':
+        say('こんにちは')
 
 def random_food():
     return random.choice(food_list)
