@@ -9,6 +9,7 @@ import datetime
 import time
 import random
 import requests
+import os
 
 # say
 import subprocess
@@ -18,21 +19,25 @@ app = Flask(__name__)
 home_path = '/home/pi/'
 aques_path = home_path + 'speak_api/lib/aquestalkpi/AquesTalkPi'
 akane_path = '/home/pi/akane-chan/main.py'
+
 python3_path = '/usr/bin/python3'
+
 absolute_script_path = home_path + 'run_duo.py'
+weather_script_path = home_path + 'weather/get_weather.py'
+
+coffee_host = os.getenv('COFFEE_HOST')
 
 food_list = ['かみなり', 'まつや', 'まつのや', 'あぶり', 'ささご', 'どんまる', 'てんや', 'カレー桜', 'イイトコ', 'ここのつ', 'かあちゃん', 'セブンイレブン', '学食', 'すた丼', 'おと', 'くらみそ', 'すき家', 'はなの舞', 'フードコート', '餃子太郎', 'つるかめ', 'らぼで自炊', 'いぶと']
-
 
 def say(message):
     print('echo >: ' +  message)
     # voice_process = subprocess.Popen([python3_path, akane_path] + message.split(), stdout=subprocess.PIPE)
     subprocess.Popen([python3_path, akane_path, message, "2.0", "1.4", "1.0", "1.0"])
     return 'message: ' + message
-
 def run_absolute():
     print('absolute')
     subprocess.Popen(['python2', absolute_script_path])
+
 
 def main():
     host = 'localhost'
@@ -103,15 +108,15 @@ def start(q):
         try:
             say('おいしいコーヒーを入れますね')
             time.sleep(4)
-            requests.get('http://192.168.1.47/coffee/0')
+            requests.get(coffee_host + '/coffee/0')
         except requests.exceptions.ConnectionError:
             say('働きたくでござる')
     elif q == 'coffee_stop':
         try:
-            requests.get('http://192.168.1.47/coffee/1')
+            requests.get(coffee_host + '/coffee/1')
             say('コーヒーをちゅうだんしました')
         except requests.exceptions.ConnectionError:
-            say('働きたくでござる')
+            say('働きたくないでござる')
     elif q == 'cancel':
         say('了解どすえー')
 
