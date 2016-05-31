@@ -29,15 +29,23 @@ coffee_host = os.getenv('COFFEE_HOST')
 
 food_list = ['かみなり', 'まつや', 'まつのや', 'あぶり', 'ささご', 'どんまる', 'てんや', 'カレー桜', 'イイトコ', 'ここのつ', 'かあちゃん', 'セブンイレブン', '学食', 'すた丼', 'おと', 'くらみそ', 'すき家', 'はなの舞', 'フードコート', '餃子太郎', 'つるかめ', 'らぼで自炊', 'いぶと']
 
+
 def say(message):
     print('echo >: ' +  message)
     # voice_process = subprocess.Popen([python3_path, akane_path] + message.split(), stdout=subprocess.PIPE)
     subprocess.Popen([python3_path, akane_path, message, "2.0", "1.4", "1.0", "1.0"])
     return 'message: ' + message
+
 def run_absolute():
     print('absolute')
     subprocess.Popen(['python2', absolute_script_path])
 
+def run_weather():
+    print('weather')
+    p = subprocess.Popen(['python2', weather_script_path], stdout=subprocess.PIPE)
+    p.wait()
+    stdout_data = p.stdout.read()
+    say(stdout_data)
 
 def main():
     host = 'localhost'
@@ -97,7 +105,7 @@ def start(q):
     if q == 'how_weather':
         say('天気は晴れです(適当)')
     elif q in ['what_day', 'what_date']:
-        say('今日は' + date_text() + "です")
+        run_weather()
     elif q == 'is_sasago':
         say('今日は笹子の日' + ('です' if is_sasago_day() else 'ではないです' ))
     elif q == 'absolute_duo':
