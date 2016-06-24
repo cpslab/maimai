@@ -1,5 +1,5 @@
-# -*- coding: utf-8 -*-
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 from __future__ import print_function
 import socket
 from contextlib import closing
@@ -10,6 +10,8 @@ import time
 import random
 import requests
 import os
+
+time.sleep(5)
 
 # say
 import subprocess
@@ -23,9 +25,11 @@ akane_path = '/home/pi/akane-chan/main.py'
 python3_path = '/usr/bin/python3'
 
 absolute_script_path = home_path + 'run_duo.py'
+weather_cache_path = home_path + 'weather/today_weather_cache.txt'
 weather_script_path = home_path + 'weather/get_weather.py'
 
 coffee_host = os.getenv('COFFEE_HOST')
+print('coffee: ' + coffee_host)
 
 food_list = ['かみなり', 'まつや', 'まつのや', 'あぶり', 'ささご', 'どんまる', 'てんや', 'カレー桜', 'イイトコ', 'ここのつ', 'かあちゃん', 'セブンイレブン', '学食', 'すた丼', 'おと', 'くらみそ', 'すき家', 'はなの舞', 'フードコート', '餃子太郎', 'つるかめ', 'らぼで自炊', 'いぶと']
 
@@ -42,7 +46,7 @@ def run_absolute():
 
 def run_weather():
     print('weather')
-    p = subprocess.Popen(['python2', weather_script_path], stdout=subprocess.PIPE)
+    p = subprocess.Popen(['cat', weather_cache_path], stdout=subprocess.PIPE)
     p.wait()
     stdout_data = p.stdout.read()
     say(stdout_data)
@@ -82,7 +86,7 @@ def main():
                             print('skip')
                             continue
                         if command == 'start':
-                            if cm <= 0.94 or is_state_recieve:
+                            if cm <= 0.94:
                                 continue
                             is_state_recieve = True
                             say('はい')
@@ -118,7 +122,7 @@ def start(q):
             time.sleep(4)
             requests.get(coffee_host + '/coffee/0')
         except requests.exceptions.ConnectionError:
-            say('働きたくでござる')
+            say('働きたくないでござる')
     elif q == 'coffee_stop':
         try:
             requests.get(coffee_host + '/coffee/1')
