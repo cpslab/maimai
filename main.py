@@ -33,8 +33,10 @@ unicorn_path = home_path + 'music/unicooooooon.wav'
 transam_path = home_path + 'music/TRANS_AM.wav'
 
 nas_path = '/mnt/nas/'
-playlist_path = nas_path + 'iTunes\ Media/Music/Compilations/**/*.m4a'
-tjm_path = '/home/pi/maimai/play_tjm'
+tjm_playlist_path = nas_path + 'iTunes Media/Music/Compilations/**/*.m4a'
+elzup_playlist_path = nas_path + 'elzup/**/*.mp3'
+tjm_path = home_path + 'maimai/play_tjm'
+elzup_path = home_path + 'maimai/play_elzup'
 
 
 coffee_host = os.getenv('COFFEE_HOST')
@@ -45,12 +47,16 @@ food_list = ['かみなり', 'まつや', 'まつのや', 'あぶり', 'ささ�
 def play_tjm():
     say('たじまさん，プレイリストスタート')
     time.sleep(3)
-    # files = os.listdir(playlist_path)
-    # filename = playlist_path + files[random.randint(0, len(files) - 1)]
     args = ['sh', tjm_path]
-    # args = ['mplayer', '-volume', '20', '-shuffle', playlist_path]
+    # args = ['mplayer', '-volume', '85', '-shuffle', tjm_playlist_path]
     subprocess.Popen(args)
-    # subprocess.call('mplayer -volume 20 -shuffle /mnt/nas/iTunes\ Media/Music/Compilations/THE\ IDOLM@STER\ CINDERELLA\ GIRLS\ ANIMATION\ PROJECT\ 00\ ST@RTER\ BEST/._02\ あんずのうた.m4a', True)
+
+def play_elzup():
+    say('えるざっぷ，プレイリストスタート')
+    time.sleep(3)
+    args = ['sh', elzup_path]
+    #  args = ['mplayer', '-volume', '85', '-shuffle', elzup_playlist_path]
+    subprocess.Popen(args)
 
 def shutup():
     subprocess.Popen(['sh', killaudio_path])
@@ -155,7 +161,7 @@ def start(q):
             say('働きたくないでござる')
     elif q == 'cancel':
         say('了解どすえー')
-    elif q == 'good_night':
+    elif q == 'goodnight':
         say('おやすみなさい，よいゆめを')
     elif q == 'hello':
         say('こんにちは')
@@ -165,13 +171,16 @@ def start(q):
         play_music(transam_path)
     elif q == 'play_tjm':
         play_tjm()
+    elif q == 'play_elzup':
+        play_elzup()
+    else:
+        say(q + " というコマンドは覚えていないです")
 
 def play_music(path):
     shutup()
     print(" ".join(['mplayer', '-volume', '100', path]))
     time.sleep(1)
     subprocess.Popen(['mplayer', '-volume', '100', path])
-    
 
 def random_food():
     return random.choice(food_list)
