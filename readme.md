@@ -4,7 +4,7 @@ card: 2
 device: 0
 
 ```
-iconv -f utf8 -t eucjp ./weather.yomi | ~/julius-kits/dictation-kit-v4.3.1-linux/bin/yomi2voca.pl > ~/julius-kits/dictation-kit-v4.3.1-linux/weather.dic
+iconv -f utf8 -t eucjp ./maimai.yomi | ~/julius-kits/dictation-kit-v4.3.1-linux/bin/yomi2voca.pl > ~/julius-kits/dictation-kit-v4.3.1-linux/maimai.dic
 ```
 
 

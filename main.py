@@ -27,12 +27,18 @@ python3_path = '/usr/bin/python3'
 absolute_script_path = home_path + 'run_duo.py'
 weather_cache_path = home_path + 'weather/today_weather_cache.txt'
 weather_script_path = home_path + 'weather/get_weather.py'
+unicorn_path = home_path + 'unicorn/unicooooooon.wav'
+transam_path = home_path + 'transam/TRANS_AM.wav'
 
 coffee_host = os.getenv('COFFEE_HOST')
 print('coffee: ' + coffee_host)
 
 food_list = ['かみなり', 'まつや', 'まつのや', 'あぶり', 'ささご', 'どんまる', 'てんや', 'カレー桜', 'イイトコ', 'ここのつ', 'かあちゃん', 'セブンイレブン', '学食', 'すた丼', 'おと', 'くらみそ', 'すき家', 'はなの舞', 'フードコート', '餃子太郎', 'つるかめ', 'らぼで自炊', 'いぶと']
 
+
+def shutup():
+    subprocess.Popen(['killall', 'aplay'], stdout=subprocess.PIPE)
+    # say('ストップしました')
 
 def say(message):
     print('echo >: ' +  message)
@@ -85,14 +91,16 @@ def main():
                         if cm < 0.50:
                             print('skip')
                             continue
-                        if command == 'start':
+                        if command == 'shutup' and cm > 0.90:
+                            shutup()
+                        elif command == 'start':
                             if cm <= 0.94:
                                 continue
                             is_state_recieve = True
                             say('はい')
                             break
                         elif is_state_recieve:
-                            if cm < 0.80:
+                            if cm < 0.94:
                                 say('え？')
                                 break
                             else:
@@ -115,7 +123,7 @@ def start(q):
     elif q == 'absolute_duo':
         run_absolute()
     elif q == 'random_food':
-        say('今日のごはんは' + random_food() + 'がおすすめ')
+        say('今日のごはんは，' + random_food() + '，がおすすめ')
     elif q == 'coffee_run':
         try:
             say('おいしいコーヒーを入れますね')
@@ -135,6 +143,10 @@ def start(q):
         say('おやすみなさい，よいゆめを')
     elif q == 'hello':
         say('こんにちは')
+    elif q == 'unicorn':
+        subprocess.Popen(['aplay', unicorn_path])
+    elif q == 'transam':
+        subprocess.Popen(['aplay', transam_path])
 
 def random_food():
     return random.choice(food_list)
