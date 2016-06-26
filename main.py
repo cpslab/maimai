@@ -24,23 +24,39 @@ akane_path = '/home/pi/akane-chan/main.py'
 
 python3_path = '/usr/bin/python3'
 
+killaudio_path = home_path + 'killaudio'
+
 absolute_script_path = home_path + 'run_duo.py'
 weather_cache_path = home_path + 'weather/today_weather_cache.txt'
 weather_script_path = home_path + 'weather/get_weather.py'
-unicorn_path = home_path + 'unicorn/unicooooooon.wav'
-transam_path = home_path + 'transam/TRANS_AM.wav'
+unicorn_path = home_path + 'music/unicooooooon.wav'
+transam_path = home_path + 'music/TRANS_AM.wav'
+
+nas_path = '/mnt/nas/'
+playlist_path = nas_path + 'iTunes\ Media/Music/Compilations/**/*.m4a'
+tjm_path = '/home/pi/maimai/play_tjm'
+
 
 coffee_host = os.getenv('COFFEE_HOST')
 print('coffee: ' + coffee_host)
 
 food_list = ['かみなり', 'まつや', 'まつのや', 'あぶり', 'ささご', 'どんまる', 'てんや', 'カレー桜', 'イイトコ', 'ここのつ', 'かあちゃん', 'セブンイレブン', '学食', 'すた丼', 'おと', 'くらみそ', 'すき家', 'はなの舞', 'フードコート', '餃子太郎', 'つるかめ', 'らぼで自炊', 'いぶと']
 
+def play_tjm():
+    say('たじまさん，プレイリストスタート')
+    time.sleep(3)
+    # files = os.listdir(playlist_path)
+    # filename = playlist_path + files[random.randint(0, len(files) - 1)]
+    args = ['sh', tjm_path]
+    # args = ['mplayer', '-volume', '20', '-shuffle', playlist_path]
+    subprocess.Popen(args)
+    # subprocess.call('mplayer -volume 20 -shuffle /mnt/nas/iTunes\ Media/Music/Compilations/THE\ IDOLM@STER\ CINDERELLA\ GIRLS\ ANIMATION\ PROJECT\ 00\ ST@RTER\ BEST/._02\ あんずのうた.m4a', True)
 
 def shutup():
-    subprocess.Popen(['killall', 'aplay'], stdout=subprocess.PIPE)
-    # say('ストップしました')
+    subprocess.Popen(['sh', killaudio_path])
 
 def say(message):
+    shutup()
     print('echo >: ' +  message)
     # voice_process = subprocess.Popen([python3_path, akane_path] + message.split(), stdout=subprocess.PIPE)
     subprocess.Popen([python3_path, akane_path, message, "2.0", "1.4", "1.0", "1.0"])
@@ -144,9 +160,18 @@ def start(q):
     elif q == 'hello':
         say('こんにちは')
     elif q == 'unicorn':
-        subprocess.Popen(['aplay', unicorn_path])
+        play_music(unicorn_path)
     elif q == 'transam':
-        subprocess.Popen(['aplay', transam_path])
+        play_music(transam_path)
+    elif q == 'play_tjm':
+        play_tjm()
+
+def play_music(path):
+    shutup()
+    print(" ".join(['mplayer', '-volume', '100', path]))
+    time.sleep(1)
+    subprocess.Popen(['mplayer', '-volume', '100', path])
+    
 
 def random_food():
     return random.choice(food_list)
