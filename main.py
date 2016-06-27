@@ -35,8 +35,10 @@ transam_path = home_path + 'music/TRANS_AM.wav'
 nas_path = '/mnt/nas/'
 tjm_playlist_path = nas_path + 'iTunes Media/Music/Compilations/**/*.m4a'
 elzup_playlist_path = nas_path + 'elzup/**/*.mp3'
+shibomeu_playlist_path = nas_path + 'shibomeu/**/*'
 tjm_path = home_path + 'maimai/play_tjm'
 elzup_path = home_path + 'maimai/play_elzup'
+shibomeu_path= home_path + 'maimai/play_shibomeu'
 
 
 coffee_host = os.getenv('COFFEE_HOST')
@@ -56,6 +58,13 @@ def play_elzup():
     time.sleep(3)
     args = ['sh', elzup_path]
     #  args = ['mplayer', '-volume', '85', '-shuffle', elzup_playlist_path]
+    subprocess.Popen(args)
+
+def play_shibomeu():
+    say('しぼめう，プレイリストスタート')
+    time.sleep(3)
+    args = ['sh', shibomeu_path]
+    # args = ['mplayer', '-volume', '85', '-shuffle', tjm_playlist_path]
     subprocess.Popen(args)
 
 def shutup():
@@ -173,6 +182,8 @@ def start(q):
         play_tjm()
     elif q == 'play_elzup':
         play_elzup()
+    elif q == 'play_shibomeu':
+        play_shibomeu()
     else:
         say(q + " というコマンドは覚えていないです")
 
