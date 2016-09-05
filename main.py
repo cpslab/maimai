@@ -67,6 +67,12 @@ def play_shibomeu():
     # args = ['mplayer', '-volume', '85', '-shuffle', tjm_playlist_path]
     subprocess.Popen(args)
 
+def screen_amagumo():
+    say('雨雲をテレビに表示します')
+    args = ['python', './cpschromecast.py']
+    # args = ['mplayer', '-volume', '85', '-shuffle', tjm_playlist_path]
+    subprocess.Popen(args)
+
 def shutup():
     subprocess.Popen(['sh', killaudio_path])
 
@@ -176,14 +182,16 @@ def start(q):
         say('こんにちは')
     elif q == 'unicorn':
         play_music(unicorn_path)
-    elif q == 'transam':
-        play_music(transam_path)
+#    elif q == 'transam':
+#        play_music(transam_path)
     elif q == 'play_tjm':
         play_tjm()
     elif q == 'play_elzup':
         play_elzup()
     elif q == 'play_shibomeu':
         play_shibomeu()
+    elif q == 'screen_amagumo':
+        screen_amagumo()
     else:
         say(q + " というコマンドは覚えていないです")
 
