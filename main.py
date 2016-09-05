@@ -10,6 +10,7 @@ import time
 import random
 import requests
 import os
+from cpschromecast import CpsChromecast
 
 time.sleep(5)
 
@@ -69,9 +70,8 @@ def play_shibomeu():
 
 def screen_amagumo():
     say('雨雲をテレビに表示します')
-    args = ['python', './cpschromecast.py']
-    # args = ['mplayer', '-volume', '85', '-shuffle', tjm_playlist_path]
-    subprocess.Popen(args)
+    cc = CpsChromecast()
+    cc.cast_rain_cloud()
 
 def shutup():
     subprocess.Popen(['sh', killaudio_path])
