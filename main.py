@@ -31,6 +31,8 @@ absolute_script_path = home_path + 'run_duo.py'
 weather_cache_path = home_path + 'weather/today_weather_cache.txt'
 weather_script_path = home_path + 'weather/get_weather.py'
 unicorn_path = home_path + 'music/unicooooooon.wav'
+miyano_path = home_path + 'music/miyano.mp3'
+dear_kiss_path = home_path + 'music/dk.mp3'
 transam_path = home_path + 'music/TRANS_AM.wav'
 
 nas_path = '/mnt/nas/'
@@ -43,6 +45,7 @@ shibomeu_path= home_path + 'maimai/play_shibomeu'
 
 
 coffee_host = os.getenv('COFFEE_HOST')
+coffee_now = 'coffee_now'
 print('coffee: ' + coffee_host)
 
 food_list = ['かみなり', 'まつや', 'まつのや', 'あぶり', 'ささご', 'どんまる', 'てんや', 'カレー桜', 'イイトコ', 'ここのつ', 'かあちゃん', 'セブンイレブン', '学食', 'すた丼', 'おと', 'くらみそ', 'すき家', 'はなの舞', 'フードコート', '餃子太郎', 'つるかめ', 'らぼで自炊', 'いぶと']
@@ -79,6 +82,7 @@ def shutup():
 def say(message):
     shutup()
     print('echo >: ' +  message)
+    # subprocess.Popen([python3_path, aques_path, message])
     # voice_process = subprocess.Popen([python3_path, akane_path] + message.split(), stdout=subprocess.PIPE)
     subprocess.Popen([python3_path, akane_path, message, "2.0", "1.4", "1.0", "1.0"])
     return 'message: ' + message
@@ -174,6 +178,12 @@ def start(q):
             say('コーヒーをちゅうだんしました')
         except requests.exceptions.ConnectionError:
             say('働きたくないでござる')
+    elif q == 'coffee_now':
+#       say_coffee = '今日のコーヒーは'
+#       f = open(coffee_now)
+#       say_coffee += f.readlines()
+#       f.close()
+        say('今日のコーヒーはブラジルショコラです')
     elif q == 'cancel':
         say('了解どすえー')
     elif q == 'goodnight':
@@ -182,10 +192,14 @@ def start(q):
         say('こんにちは')
     elif q == 'unicorn':
         play_music(unicorn_path)
+#    elif q == 'dear_kiss':
+#        play_music(dear_kiss_path)
 #    elif q == 'transam':
 #        play_music(transam_path)
     elif q == 'play_tjm':
         play_tjm()
+    elif q == 'stretch':
+        play_music(miyano_path)
     elif q == 'play_elzup':
         play_elzup()
     elif q == 'play_shibomeu':
