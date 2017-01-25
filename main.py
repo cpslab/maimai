@@ -10,14 +10,15 @@ import time
 import random
 import requests
 import os
+import sys
+sys.path.append("/home/pi")
+from irkit import main as power_on
 from cpschromecast import CpsChromecast
 
 time.sleep(5)
 
 # say
 import subprocess
-from flask import Flask
-app = Flask(__name__)
 
 home_path = '/home/pi/'
 aques_path = home_path + 'speak_api/lib/aquestalkpi/AquesTalkPi'
@@ -31,6 +32,7 @@ absolute_script_path = home_path + 'run_duo.py'
 weather_cache_path = home_path + 'weather/today_weather_cache.txt'
 weather_script_path = home_path + 'weather/get_weather.py'
 unicorn_path = home_path + 'music/unicooooooon.wav'
+kyoshitsu_path = home_path + 'music/kyoshitsu.mp3'
 miyano_path = home_path + 'music/miyano.mp3'
 dear_kiss_path = home_path + 'music/dk.mp3'
 transam_path = home_path + 'music/TRANS_AM.wav'
@@ -45,7 +47,7 @@ shibomeu_path= home_path + 'maimai/play_shibomeu'
 
 
 coffee_host = os.getenv('COFFEE_HOST')
-coffee_now = 'coffee_now'
+coffee_now = '/home/pi/maimai/coffee_now'
 print('coffee: ' + coffee_host)
 
 food_list = ['かみなり', 'まつや', 'まつのや', 'あぶり', 'ささご', 'どんまる', 'てんや', 'カレー桜', 'イイトコ', 'ここのつ', 'かあちゃん', 'セブンイレブン', '学食', 'すた丼', 'おと', 'くらみそ', 'すき家', 'はなの舞', 'フードコート', '餃子太郎', 'つるかめ', 'らぼで自炊', 'いぶと', 'ぽぽらまーま', 'しんぱち食堂']
@@ -170,6 +172,8 @@ def start(q):
             say('おいしいコーヒーを入れますね')
             time.sleep(4)
             requests.get(coffee_host + '/coffee/0')
+            time.sleep(5)
+            play_music(kyoshitsu_path)
         except requests.exceptions.ConnectionError:
             say('働きたくないでござる')
     elif q == 'coffee_stop':
@@ -179,11 +183,11 @@ def start(q):
         except requests.exceptions.ConnectionError:
             say('働きたくないでござる')
     elif q == 'coffee_now':
-#       say_coffee = '今日のコーヒーは'
-#       f = open(coffee_now)
-#       say_coffee += f.readlines()
-#       f.close()
-        say('今日のコーヒーはブラジルショコラです')
+        f = open(coffee_now)
+        say_coffee = f.readlines()[0]
+        f.close()
+        #say_coffee = 'オータムブレンド'
+        say('今日のコーヒーは「' + say_coffee + '」です')
     elif q == 'cancel':
         say('了解どすえー')
     elif q == 'goodnight':
@@ -206,6 +210,9 @@ def start(q):
         play_shibomeu()
     elif q == 'screen_amagumo':
         screen_amagumo()
+    elif q == 'tv_on':
+        say("テレビをつけます")
+        power_on()
     else:
         say(q + " というコマンドは覚えていないです")
 
@@ -233,4 +240,9 @@ def fix_format_xml(text):
 
 
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except:
+        import traceback
+        traceback.print_exc()
+        say('まいまい 停止します')
