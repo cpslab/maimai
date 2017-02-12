@@ -15,6 +15,8 @@ sys.path.append("/home/pi")
 from irkit import main as power_on
 from cpschromecast import CpsChromecast
 
+import threading
+
 time.sleep(5)
 
 # say
@@ -51,6 +53,7 @@ coffee_now = '/home/pi/maimai/coffee_now'
 print('coffee: ' + coffee_host)
 
 food_list = ['かみなり', 'まつや', 'まつのや', 'あぶり', 'ささご', 'どんまる', 'てんや', 'カレー桜', 'イイトコ', 'ここのつ', 'かあちゃん', 'セブンイレブン', '学食', 'すた丼', 'おと', 'くらみそ', 'すき家', 'はなの舞', 'フードコート', '餃子太郎', 'つるかめ', 'らぼで自炊', 'いぶと', 'ぽぽらまーま', 'しんぱち食堂']
+timer_thread = None
 
 def play_tjm():
     say('たじまさん，プレイリストスタート')
@@ -213,8 +216,17 @@ def start(q):
     elif q == 'tv_on':
         say("テレビをつけます")
         power_on()
+    elif q == 'timer_5m':
+        say('5ふんタイマーをセットしました')
+        timer_thread = threading.Timer(5, lambda: say('5ふんたちましたよ'))
+        timer_thread.start()
+    elif q == 'timer_30m':
+        say('30ふんタイマーをセットしました')
+        timer_thread = threading.Timer(30, lambda: say('30ふんたちましたよ'))
+        timer_thread.start()
     else:
         say(q + " というコマンドは覚えていないです")
+
 
 def play_music(path):
     shutup()
@@ -245,4 +257,6 @@ if __name__ == '__main__':
     except:
         import traceback
         traceback.print_exc()
+        if timer_thread and timer_thread.isAlive():
+            timer_thread.cancel()
         say('まいまい 停止します')
