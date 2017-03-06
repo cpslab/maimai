@@ -14,6 +14,7 @@ import sys
 sys.path.append("/home/pi")
 from irkit import main as power_on
 from cpschromecast import CpsChromecast
+import urllib2
 
 import threading
 
@@ -218,12 +219,20 @@ def start(q):
         power_on()
     elif q == 'timer_5m':
         say('5ふんタイマーをセットしました')
-        timer_thread = threading.Timer(5, lambda: say('5ふんたちましたよ'))
+        timer_thread = threading.Timer(5 * 60, lambda: say('5ふんたちましたよ'))
         timer_thread.start()
     elif q == 'timer_30m':
         say('30ふんタイマーをセットしました')
-        timer_thread = threading.Timer(30, lambda: say('30ふんたちましたよ'))
+        timer_thread = threading.Timer(30 * 60, lambda: say('30ふんたちましたよ'))
         timer_thread.start()
+    elif q == 'now_humid':
+        res = urllib2.urlopen('http://192.168.1.172')
+        t, h = res.read().split(',')
+        say(h + "パーセントです")
+    elif q == 'now_temp':
+        res = urllib2.urlopen('http://192.168.1.172')
+        t, h = res.read().split(',')
+        say(t + "どです")
     else:
         say(q + " というコマンドは覚えていないです")
 
