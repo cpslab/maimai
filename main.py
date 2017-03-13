@@ -149,4 +149,3 @@ if __name__ == '__main__':
         import traceback
         traceback.print_exc()
         bot.listen('exit')
-        say('まいまい 停止します')
