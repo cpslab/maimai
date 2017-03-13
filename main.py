@@ -16,8 +16,6 @@ from irkit import main as power_on
 from cpschromecast import CpsChromecast
 import urllib2
 
-import threading
-
 time.sleep(5)
 
 # say
@@ -91,8 +89,6 @@ shibomeu_path= home_path + 'maimai/play_shibomeu'
 coffee_host = os.getenv('COFFEE_HOST')
 coffee_now = '/home/pi/maimai/coffee_now'
 # print('coffee: ' + coffee_host)
-
-timer_thread = None
 
 def play_tjm():
     say('たじまさん，プレイリストスタート')
@@ -256,14 +252,6 @@ def start(q):
     elif q == 'tv_on':
         say("テレビをつけます")
         power_on()
-    elif q == 'timer_5m':
-        say('5ふんタイマーをセットしました')
-        timer_thread = threading.Timer(5 * 60, lambda: say('5ふんたちましたよ'))
-        timer_thread.start()
-    elif q == 'timer_30m':
-        say('30ふんタイマーをセットしました')
-        timer_thread = threading.Timer(30 * 60, lambda: say('30ふんたちましたよ'))
-        timer_thread.start()
     elif q == 'now_humid':
         res = urllib2.urlopen('http://192.168.1.172')
         t, h = res.read().split(',')
@@ -274,7 +262,6 @@ def start(q):
         say(t + "どです")
     # else:
         # say(q + " というコマンドは覚えていないです")
-
 
 def play_music(path):
     shutup()
@@ -291,6 +278,10 @@ if __name__ == '__main__':
     except:
         import traceback
         traceback.print_exc()
-        if timer_thread and timer_thread.isAlive():
-            timer_thread.cancel()
+        bot.command = 'exit'
+        for listener in listeners:
+            try:
+                listener.main(bot)
+            except Exception as e:
+                print(e)
         say('まいまい 停止します')
