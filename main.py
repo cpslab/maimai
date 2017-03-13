@@ -3,9 +3,7 @@
 from __future__ import print_function
 import socket
 from contextlib import closing
-import commands
 import xml.etree.ElementTree as ET
-import datetime
 import time
 import requests
 import os
@@ -201,7 +199,6 @@ def main():
                     print(xml_text)
                     print('--')
 
-# Commands
 def start(q):
     if q == 'how_weather':
         run_weather()
