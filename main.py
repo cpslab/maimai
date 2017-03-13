@@ -7,7 +7,6 @@ import commands
 import xml.etree.ElementTree as ET
 import datetime
 import time
-import random
 import requests
 import os
 import sys
