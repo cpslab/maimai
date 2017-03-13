@@ -55,7 +55,9 @@ class Bot(object):
         return listeners
 
     def stop_say(self):
-        pass
+        home_path = os.environ['HOME']
+        killaudio_path = os.path.join(home_path, 'killaudio')
+        subprocess.Popen(['sh', killaudio_path])
 
     def play_music(self, music_path):
         pass
