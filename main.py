@@ -25,6 +25,7 @@ import importlib
 class Bot(object):
     def __init__(self):
         self._command = ''
+        self._listeners = self._load_scripts()
 
     @property
     def command(self):
@@ -38,6 +39,23 @@ class Bot(object):
         shutup()
         print('bot >: ' +  message)
         subprocess.Popen([python3_path, akane_path, message, "2.0", "1.4", "1.0", "1.0"])
+    def listen(self, message):
+        for listener in self._listeners:
+            try:
+                listener.main(self)
+            except Exception as e:
+                print(e)
+
+    def _load_scripts():
+        listeners = []
+        for f in glob.glob('scripts/*.py'):
+            moduleName = path.splitext(path.basename(f))[0]
+            if (moduleName == '__init__'):
+                continue
+            module = importlib.import_module('scripts.' + moduleName)
+            if callable(module.main):
+                listeners.append(module)
+        return listeners
 
     def stop_say(self):
         pass
@@ -45,17 +63,6 @@ class Bot(object):
     def play_music(self, music_path):
         pass
         # 音楽を流す
-
-def load_scripts():
-    listeners = []
-    for f in glob.glob('scripts/*.py'):
-        moduleName = path.splitext(path.basename(f))[0]
-        if (moduleName == '__init__'):
-            continue
-        module = importlib.import_module('scripts.' + moduleName)
-        if callable(module.main):
-            listeners.append(module)
-    return listeners
 
 
 home_path = '/home/pi/'
@@ -131,6 +138,32 @@ def run_weather():
     stdout_data = p.stdout.read()
     say(stdout_data)
 
+def commands_loop(root):
+    for word in root.iter('WHYPO'):
+        command = word.get('WORD')
+        cm = float(word.get('CM'))
+        print()
+        print(command + ": [" + str(cm) + "]")
+        if cm < 0.50:
+            print('skip')
+            continue
+        if command == 'shutup' and cm > 0.90:
+            shutup()
+        elif command == 'start':
+            if cm <= 0.94:
+                continue
+            is_state_recieve = True
+            say('はい')
+            break
+        elif is_state_recieve:
+            if cm < 0.94:
+                say('え？')
+                break
+            else:
+                bot.listen(command)
+                start(command)
+                is_state_recieve = False
+
 def main():
     host = 'localhost'
     port = 10500
@@ -143,7 +176,6 @@ def main():
     is_state_recieve = False
 
     bot = Bot()
-    listeners = load_scripts()
 
     say('まいまい起動しました')
 
@@ -162,37 +194,7 @@ def main():
             for xml_text in xmls:
                 try:
                     root = ET.fromstring(xml_text)
-                    for word in root.iter('WHYPO'):
-                        command = word.get('WORD')
-                        cm = float(word.get('CM'))
-                        print()
-                        print(command + ": [" + str(cm) + "]")
-                        if cm < 0.50:
-                            print('skip')
-                            continue
-                        if command == 'shutup' and cm > 0.90:
-                            shutup()
-                        elif command == 'start':
-                            if cm <= 0.94:
-                                continue
-                            is_state_recieve = True
-                            say('はい')
-                            break
-                        elif is_state_recieve:
-                            if cm < 0.94:
-                                say('え？')
-                                break
-                            else:
-                                bot.command = command
-                                for listener in listeners:
-                                    print("listener", listener)
-                                    try:
-                                        listener.main(bot)
-                                    except Exception as e:
-                                        print(e)
-
-                                start(command)
-                                is_state_recieve = False
+                    commands_loop(root)
                 except ET.ParseError:
                     print()
                     print('parce error--')
