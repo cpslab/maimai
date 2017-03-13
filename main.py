@@ -249,10 +249,5 @@ if __name__ == '__main__':
     except:
         import traceback
         traceback.print_exc()
-        bot.command = 'exit'
-        for listener in listeners:
-            try:
-                listener.main(bot)
-            except Exception as e:
-                print(e)
+        bot.listen('exit')
         say('まいまい 停止します')
