@@ -22,6 +22,45 @@ time.sleep(5)
 
 # say
 import subprocess
+from os import path
+import glob
+import importlib
+
+class Bot(object):
+    def __init__(self):
+        self._command = ''
+
+    @property
+    def command(self):
+        return self._command
+
+    @command.setter
+    def command(self, value):
+        self._command = value
+
+    def say(self, message):
+        shutup()
+        print('bot >: ' +  message)
+        subprocess.Popen([python3_path, akane_path, message, "2.0", "1.4", "1.0", "1.0"])
+
+    def stop_say(self):
+        pass
+
+    def play_music(self, music_path):
+        pass
+        # 音楽を流す
+
+def load_scripts():
+    listeners = []
+    for f in glob.glob('scripts/*.py'):
+        moduleName = path.splitext(path.basename(f))[0]
+        if (moduleName == '__init__'):
+            continue
+        module = importlib.import_module('scripts.' + moduleName)
+        if callable(module.main):
+            listeners.append(module)
+    return listeners
+
 
 home_path = '/home/pi/'
 aques_path = home_path + 'speak_api/lib/aquestalkpi/AquesTalkPi'
@@ -51,9 +90,8 @@ shibomeu_path= home_path + 'maimai/play_shibomeu'
 
 coffee_host = os.getenv('COFFEE_HOST')
 coffee_now = '/home/pi/maimai/coffee_now'
-print('coffee: ' + coffee_host)
+# print('coffee: ' + coffee_host)
 
-food_list = ['かみなり', 'まつや', 'まつのや', 'あぶり', 'ささご', 'どんまる', 'てんや', 'カレー桜', 'イイトコ', 'ここのつ', 'かあちゃん', 'セブンイレブン', '学食', 'すた丼', 'おと', 'くらみそ', 'すき家', 'はなの舞', 'フードコート', '餃子太郎', 'つるかめ', 'らぼで自炊', 'いぶと', 'ぽぽらまーま', 'しんぱち食堂']
 timer_thread = None
 
 def play_tjm():
@@ -114,10 +152,15 @@ def main():
     text_queue = ""
     separator = ".\n"
     is_state_recieve = False
+
+    bot = Bot()
+    listeners = load_scripts()
+
     say('まいまい起動しました')
 
     while True:
         recv_data = sock.recv(bufsize)
+
         # print (recv_data)
         # parser.feed(recv_data)
         text_queue += recv_data
@@ -151,6 +194,14 @@ def main():
                                 say('え？')
                                 break
                             else:
+                                bot.command = command
+                                for listener in listeners:
+                                    print("listener", listener)
+                                    try:
+                                        listener.main(bot)
+                                    except Exception as e:
+                                        print(e)
+
                                 start(command)
                                 is_state_recieve = False
                 except ET.ParseError:
@@ -169,8 +220,8 @@ def start(q):
         say('今日は笹子の日' + ('です' if is_sasago_day() else 'ではないです' ))
     elif q == 'absolute_duo':
         run_absolute()
-    elif q == 'random_food':
-        say('今日のごはんは，' + random_food() + '，がおすすめ')
+    # elif q == 'random_food':
+        # say('今日のごはんは，' + random_food() + '，がおすすめ')
     elif q == 'coffee_run':
         try:
             say('おいしいコーヒーを入れますね')
@@ -233,8 +284,8 @@ def start(q):
         res = urllib2.urlopen('http://192.168.1.172')
         t, h = res.read().split(',')
         say(t + "どです")
-    else:
-        say(q + " というコマンドは覚えていないです")
+    # else:
+        # say(q + " というコマンドは覚えていないです")
 
 
 def play_music(path):
