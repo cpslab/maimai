@@ -10,7 +10,6 @@ import os
 import sys
 sys.path.append("/home/pi")
 from irkit import main as power_on
-from cpschromecast import CpsChromecast
 
 time.sleep(5)
 
@@ -112,11 +111,6 @@ def play_shibomeu():
     args = ['sh', shibomeu_path]
     # args = ['mplayer', '-volume', '85', '-shuffle', tjm_playlist_path]
     subprocess.Popen(args)
-
-def screen_amagumo():
-    say('雨雲をテレビに表示します')
-    cc = CpsChromecast()
-    cc.cast_rain_cloud()
 
 def shutup():
     subprocess.Popen(['sh', killaudio_path])
@@ -237,8 +231,6 @@ def start(q):
         play_elzup()
     elif q == 'play_shibomeu':
         play_shibomeu()
-    elif q == 'screen_amagumo':
-        screen_amagumo()
     elif q == 'tv_on':
         say("テレビをつけます")
         power_on()
