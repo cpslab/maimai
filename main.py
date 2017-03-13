@@ -237,8 +237,6 @@ def start(q):
         f.close()
         #say_coffee = 'オータムブレンド'
         say('今日のコーヒーは「' + say_coffee + '」です')
-    elif q == 'cancel':
-        say('了解どすえー')
     elif q == 'goodnight':
         say('おやすみなさい，よいゆめを')
     elif q == 'hello':
