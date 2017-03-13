@@ -66,7 +66,6 @@ python3_path = '/usr/bin/python3'
 
 killaudio_path = home_path + 'killaudio'
 
-absolute_script_path = home_path + 'run_duo.py'
 weather_cache_path = home_path + 'weather/today_weather_cache.txt'
 weather_script_path = home_path + 'weather/get_weather.py'
 unicorn_path = home_path + 'music/unicooooooon.wav'
@@ -124,10 +123,6 @@ def say(message):
     # voice_process = subprocess.Popen([python3_path, akane_path] + message.split(), stdout=subprocess.PIPE)
     subprocess.Popen([python3_path, akane_path, message, "2.0", "1.4", "1.0", "1.0"])
     return 'message: ' + message
-
-def run_absolute():
-    print('absolute')
-    subprocess.Popen(['python2', absolute_script_path])
 
 def run_weather():
     print('weather')
@@ -208,8 +203,6 @@ def main():
 def start(q):
     if q == 'how_weather':
         run_weather()
-    elif q == 'absolute_duo':
-        run_absolute()
     elif q == 'coffee_run':
         try:
             say('おいしいコーヒーを入れますね')
