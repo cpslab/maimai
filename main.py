@@ -71,46 +71,12 @@ python3_path = '/usr/bin/python3'
 killaudio_path = home_path + 'killaudio'
 
 weather_cache_path = home_path + 'weather/today_weather_cache.txt'
-weather_script_path = home_path + 'weather/get_weather.py'
-unicorn_path = home_path + 'music/unicooooooon.wav'
-kyoshitsu_path = home_path + 'music/kyoshitsu.mp3'
-miyano_path = home_path + 'music/miyano.mp3'
-dear_kiss_path = home_path + 'music/dk.mp3'
-transam_path = home_path + 'music/TRANS_AM.wav'
 
 nas_path = '/mnt/nas/'
-tjm_playlist_path = nas_path + 'iTunes Media/Music/Compilations/**/*.m4a'
-elzup_playlist_path = nas_path + 'elzup/**/*.mp3'
-shibomeu_playlist_path = nas_path + 'shibomeu/**/*'
-tjm_path = home_path + 'maimai/play_tjm'
-elzup_path = home_path + 'maimai/play_elzup'
-shibomeu_path= home_path + 'maimai/play_shibomeu'
-
 
 coffee_host = os.getenv('COFFEE_HOST')
 coffee_now = '/home/pi/maimai/coffee_now'
 # print('coffee: ' + coffee_host)
-
-def play_tjm():
-    say('たじまさん，プレイリストスタート')
-    time.sleep(3)
-    args = ['sh', tjm_path]
-    # args = ['mplayer', '-volume', '85', '-shuffle', tjm_playlist_path]
-    subprocess.Popen(args)
-
-def play_elzup():
-    say('えるざっぷ，プレイリストスタート')
-    time.sleep(3)
-    args = ['sh', elzup_path]
-    #  args = ['mplayer', '-volume', '85', '-shuffle', elzup_playlist_path]
-    subprocess.Popen(args)
-
-def play_shibomeu():
-    say('しぼめう，プレイリストスタート')
-    time.sleep(3)
-    args = ['sh', shibomeu_path]
-    # args = ['mplayer', '-volume', '85', '-shuffle', tjm_playlist_path]
-    subprocess.Popen(args)
 
 def shutup():
     subprocess.Popen(['sh', killaudio_path])
@@ -217,31 +183,11 @@ def start(q):
         f.close()
         #say_coffee = 'オータムブレンド'
         say('今日のコーヒーは「' + say_coffee + '」です')
-    elif q == 'unicorn':
-        play_music(unicorn_path)
-#    elif q == 'dear_kiss':
-#        play_music(dear_kiss_path)
-#    elif q == 'transam':
-#        play_music(transam_path)
-    elif q == 'play_tjm':
-        play_tjm()
-    elif q == 'stretch':
-        play_music(miyano_path)
-    elif q == 'play_elzup':
-        play_elzup()
-    elif q == 'play_shibomeu':
-        play_shibomeu()
     elif q == 'tv_on':
         say("テレビをつけます")
         power_on()
     # else:
         # say(q + " というコマンドは覚えていないです")
-
-def play_music(path):
-    shutup()
-    print(" ".join(['mplayer', '-volume', '100', path]))
-    time.sleep(1)
-    subprocess.Popen(['mplayer', '-volume', '100', path])
 
 if __name__ == '__main__':
     try:
