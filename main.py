@@ -9,7 +9,6 @@ import requests
 import os
 import sys
 sys.path.append("/home/pi")
-from irkit import main as power_on
 
 time.sleep(5)
 
@@ -185,9 +184,6 @@ def start(q):
         f.close()
         #say_coffee = 'オータムブレンド'
         say('今日のコーヒーは「' + say_coffee + '」です')
-    elif q == 'tv_on':
-        say("テレビをつけます")
-        power_on()
     # else:
         # say(q + " というコマンドは覚えていないです")
 
