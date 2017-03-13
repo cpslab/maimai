@@ -76,7 +76,6 @@ weather_cache_path = home_path + 'weather/today_weather_cache.txt'
 nas_path = '/mnt/nas/'
 
 coffee_host = os.getenv('COFFEE_HOST')
-coffee_now = '/home/pi/maimai/coffee_now'
 # print('coffee: ' + coffee_host)
 
 def shutup():
@@ -178,12 +177,6 @@ def start(q):
             say('コーヒーをちゅうだんしました')
         except requests.exceptions.ConnectionError:
             say('働きたくないでござる')
-    elif q == 'coffee_now':
-        f = open(coffee_now)
-        say_coffee = f.readlines()[0]
-        f.close()
-        #say_coffee = 'オータムブレンド'
-        say('今日のコーヒーは「' + say_coffee + '」です')
     # else:
         # say(q + " というコマンドは覚えていないです")
 
