@@ -10,6 +10,7 @@ import os
 import sys
 sys.path.append("/home/pi")
 
+# TODO what?
 time.sleep(5)
 
 # say
@@ -58,30 +59,18 @@ class Bot(object):
         killaudio_path = os.path.join(home_path, 'killaudio')
         subprocess.Popen(['sh', killaudio_path])
 
-    def play_music(self, music_path):
-        pass
-        # 音楽を流す
-
-
 home_path = '/home/pi/'
-aques_path = home_path + 'speak_api/lib/aquestalkpi/AquesTalkPi'
 akane_path = '/home/pi/akane-chan/main.py'
 
-python3_path = '/usr/bin/python3'
-
-killaudio_path = home_path + 'killaudio'
-
-nas_path = '/mnt/nas/'
-
 def shutup():
+    killaudio_path = home_path + 'killaudio'
     subprocess.Popen(['sh', killaudio_path])
 
 def say(message):
     shutup()
     print('echo >: ' +  message)
-    # subprocess.Popen([python3_path, aques_path, message])
     # voice_process = subprocess.Popen([python3_path, akane_path] + message.split(), stdout=subprocess.PIPE)
-    subprocess.Popen([python3_path, akane_path, message, "2.0", "1.4", "1.0", "1.0"])
+    subprocess.Popen(['/usr/bin/python3', akane_path, message, "2.0", "1.4", "1.0", "1.0"])
     return 'message: ' + message
 
 def run_weather():
