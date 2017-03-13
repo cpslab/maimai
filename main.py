@@ -237,10 +237,6 @@ def start(q):
         f.close()
         #say_coffee = 'オータムブレンド'
         say('今日のコーヒーは「' + say_coffee + '」です')
-    elif q == 'goodnight':
-        say('おやすみなさい，よいゆめを')
-    elif q == 'hello':
-        say('こんにちは')
     elif q == 'unicorn':
         play_music(unicorn_path)
 #    elif q == 'dear_kiss':
