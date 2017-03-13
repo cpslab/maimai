@@ -218,8 +218,6 @@ def start(q):
         say('今日は' + date_text() + "です")
     elif q == 'absolute_duo':
         run_absolute()
-    # elif q == 'random_food':
-        # say('今日のごはんは，' + random_food() + '，がおすすめ')
     elif q == 'coffee_run':
         try:
             say('おいしいコーヒーを入れますね')
@@ -291,9 +289,6 @@ def play_music(path):
     print(" ".join(['mplayer', '-volume', '100', path]))
     time.sleep(1)
     subprocess.Popen(['mplayer', '-volume', '100', path])
-
-def random_food():
-    return random.choice(food_list)
 
 def date_text():
     now = datetime.datetime.now()
