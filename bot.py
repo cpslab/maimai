@@ -7,17 +7,6 @@ import importlib
 home_path =  os.environ['HOME']
 akane_path = os.path.join(home_path, 'akane-chan', 'main.py')
 
-def shutup():
-    killaudio_path = os.path.join(home_path, 'killaudio')
-    subprocess.Popen(['sh', killaudio_path])
-
-def say(message):
-    shutup()
-    print('echo >: ' +  message)
-    # voice_process = subprocess.Popen([python3_path, akane_path] + message.split(), stdout=subprocess.PIPE)
-    subprocess.Popen(['/usr/bin/python3', akane_path, message, "2.0", "1.4", "1.0", "1.0"])
-    return 'message: ' + message
-
 class Bot(object):
     def __init__(self):
         self._command = ''
@@ -32,7 +21,7 @@ class Bot(object):
         self._command = value
 
     def say(self, message):
-        shutup()
+        self.stop_say()
         print('bot >: ' +  message)
         subprocess.Popen([python3_path, akane_path, message, "2.0", "1.4", "1.0", "1.0"])
 
