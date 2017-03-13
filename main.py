@@ -254,9 +254,6 @@ def play_music(path):
     time.sleep(1)
     subprocess.Popen(['mplayer', '-volume', '100', path])
 
-def fix_format_xml(text):
-    return "".join(text.split("\n")[:-2])
-
 if __name__ == '__main__':
     try:
         main()
