@@ -214,8 +214,6 @@ def main():
 def start(q):
     if q == 'how_weather':
         run_weather()
-    elif q in ['what_day', 'what_date']:
-        say('今日は' + date_text() + "です")
     elif q == 'absolute_duo':
         run_absolute()
     elif q == 'coffee_run':
@@ -290,15 +288,8 @@ def play_music(path):
     time.sleep(1)
     subprocess.Popen(['mplayer', '-volume', '100', path])
 
-def date_text():
-    now = datetime.datetime.now()
-    # NOTE: strftime は 0埋めされる
-    day_str = '月,火,水,木,金,土,日'.split(',')[now.weekday()]
-    return str(now.month) + '月' + str(now.day) + '日の' + day_str + '曜日'
-
 def fix_format_xml(text):
     return "".join(text.split("\n")[:-2])
-
 
 if __name__ == '__main__':
     try:
