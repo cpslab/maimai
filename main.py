@@ -75,9 +75,6 @@ weather_cache_path = home_path + 'weather/today_weather_cache.txt'
 
 nas_path = '/mnt/nas/'
 
-coffee_host = os.getenv('COFFEE_HOST')
-# print('coffee: ' + coffee_host)
-
 def shutup():
     subprocess.Popen(['sh', killaudio_path])
 
@@ -162,21 +159,6 @@ def main():
 def start(q):
     if q == 'how_weather':
         run_weather()
-    elif q == 'coffee_run':
-        try:
-            say('おいしいコーヒーを入れますね')
-            time.sleep(4)
-            requests.get(coffee_host + '/coffee/0')
-            time.sleep(5)
-            play_music(kyoshitsu_path)
-        except requests.exceptions.ConnectionError:
-            say('働きたくないでござる')
-    elif q == 'coffee_stop':
-        try:
-            requests.get(coffee_host + '/coffee/1')
-            say('コーヒーをちゅうだんしました')
-        except requests.exceptions.ConnectionError:
-            say('働きたくないでござる')
     # else:
         # say(q + " というコマンドは覚えていないです")
 
