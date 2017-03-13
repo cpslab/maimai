@@ -2,6 +2,7 @@
 import os
 import subprocess
 import glob
+import importlib
 
 home_path =  os.environ['HOME']
 akane_path = os.path.join(home_path, 'akane-chan', 'main.py')
@@ -34,6 +35,7 @@ class Bot(object):
         shutup()
         print('bot >: ' +  message)
         subprocess.Popen([python3_path, akane_path, message, "2.0", "1.4", "1.0", "1.0"])
+
     def listen(self, message):
         for listener in self._listeners:
             try:
