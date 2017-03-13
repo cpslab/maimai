@@ -13,7 +13,6 @@ import sys
 sys.path.append("/home/pi")
 from irkit import main as power_on
 from cpschromecast import CpsChromecast
-import urllib2
 
 time.sleep(5)
 
@@ -251,14 +250,6 @@ def start(q):
     elif q == 'tv_on':
         say("テレビをつけます")
         power_on()
-    elif q == 'now_humid':
-        res = urllib2.urlopen('http://192.168.1.172')
-        t, h = res.read().split(',')
-        say(h + "パーセントです")
-    elif q == 'now_temp':
-        res = urllib2.urlopen('http://192.168.1.172')
-        t, h = res.read().split(',')
-        say(t + "どです")
     # else:
         # say(q + " というコマンドは覚えていないです")
 
