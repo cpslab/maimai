@@ -216,8 +216,6 @@ def start(q):
         run_weather()
     elif q in ['what_day', 'what_date']:
         say('今日は' + date_text() + "です")
-    elif q == 'is_sasago':
-        say('今日は笹子の日' + ('です' if is_sasago_day() else 'ではないです' ))
     elif q == 'absolute_duo':
         run_absolute()
     # elif q == 'random_food':
@@ -302,10 +300,6 @@ def date_text():
     # NOTE: strftime は 0埋めされる
     day_str = '月,火,水,木,金,土,日'.split(',')[now.weekday()]
     return str(now.month) + '月' + str(now.day) + '日の' + day_str + '曜日'
-
-def is_sasago_day():
-    now = datetime.datetime.now()
-    return now.day % 10 == 5
 
 def fix_format_xml(text):
     return "".join(text.split("\n")[:-2])
