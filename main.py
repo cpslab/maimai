@@ -71,8 +71,6 @@ python3_path = '/usr/bin/python3'
 
 killaudio_path = home_path + 'killaudio'
 
-weather_cache_path = home_path + 'weather/today_weather_cache.txt'
-
 nas_path = '/mnt/nas/'
 
 def shutup():
@@ -116,7 +114,6 @@ def commands_loop(root):
                 break
             else:
                 bot.listen(command)
-                start(command)
                 is_state_recieve = False
 
 def main():
@@ -155,12 +152,6 @@ def main():
                     print('parce error--')
                     print(xml_text)
                     print('--')
-
-def start(q):
-    if q == 'how_weather':
-        run_weather()
-    # else:
-        # say(q + " というコマンドは覚えていないです")
 
 if __name__ == '__main__':
     try:
