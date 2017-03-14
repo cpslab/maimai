@@ -11,19 +11,19 @@ coffee_host = os.getenv('COFFEE_HOST')
 def main(bot):
     if bot.command == 'coffee_run':
         try:
-            robot.say('おいしいコーヒーを入れますね')
+            bot.say('おいしいコーヒーを入れますね')
             time.sleep(4)
             requests.get(coffee_host + '/coffee/0')
             time.sleep(5)
             play_music(kyoshitsu_path)
         except requests.exceptions.ConnectionError:
-            robot.say('働きたくないでござる')
+            bot.say('働きたくないでござる')
     elif q == 'coffee_stop':
         try:
             requests.get(coffee_host + '/coffee/1')
-            robot.say('コーヒーをちゅうだんしました')
+            bot.say('コーヒーをちゅうだんしました')
         except requests.exceptions.ConnectionError:
-            robot.say('働きたくないでござる')
+            bot.say('働きたくないでござる')
 
 def play_music(bot, path):
     bot.stop_say()

@@ -8,4 +8,4 @@ def main(bot):
         say_coffee = f.readlines()[0]
         f.close()
         #say_coffee = 'オータムブレンド'
-        robot.say('今日のコーヒーは「' + say_coffee + '」です')
+        bot.say('今日のコーヒーは「' + say_coffee + '」です')

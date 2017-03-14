@@ -11,5 +11,5 @@ def main(bot):
         p = subprocess.Popen(['cat', weather_cache_path], stdout=subprocess.PIPE)
         p.wait()
         stdout_data = p.stdout.read()
-        robot.say(stdout_data)
+        bot.say(stdout_data)
 
