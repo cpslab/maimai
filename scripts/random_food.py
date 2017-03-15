@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from util.hook import cmd
 import random
 
 food_list = [
@@ -29,6 +30,6 @@ food_list = [
     'しんぱち食堂'
 ]
 
-def main(bot):
-    if bot.command == 'random_food':
-        bot.say('今日のごはんは，' + random.choice(food_list) + '，がおすすめ')
+@cmd('random_food')
+def random_food(bot):
+    bot.say('今日のごはんは，' + random.choice(food_list) + '，がおすすめ')

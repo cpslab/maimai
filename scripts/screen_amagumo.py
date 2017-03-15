@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
+from util.hook import cmd
 import datetime
 from cpschromecast import CpsChromecast
 # TODO importの先を変更する
 
-def screen_amagumo():
-    say('雨雲をテレビに表示します')
+@cmd('screen_amagumo')
+def screen_amagumo(bot):
+    bot.say('雨雲をテレビに表示します')
     cc = CpsChromecast()
     cc.cast_rain_cloud()
-
-def main(bot):
-    if bot.command == 'screen_amagumo':
-        screen_amagumo()

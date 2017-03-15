@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
+from util.hook import cmd
 
-def main(bot):
-    if bot.command == 'cancel':
-        bot.say('了解どすえー')
+@cmd("cancel")
+def cancel(bot):
+    bot.say('了解どすえー')

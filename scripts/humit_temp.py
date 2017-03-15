@@ -1,14 +1,17 @@
 # -*- coding: utf-8 -*-
+from util.hook import cmd
 import urllib2
 
 def fetchAPI():
     res = urllib2.urlopen('http://192.168.1.172')
     return res.read().split(url)
 
-def main(bot):
-    if bot.command == 'now_humid':
-        t, h = fetchAPI()
-        bot.say(h + "パーセントです")
-    elif bot.command == 'now_temp':
-        t, h = fetchAPI()
-        bot.say(t + "どです")
+@cmd("now_humid")
+def now_humid(bot):
+    t, h = fetchAPI()
+    bot.say(h + "パーセントです")
+
+@cmd("now_temp")
+def now_temp(bot):
+    t, h = fetchAPI()
+    bot.say(t + "どです")

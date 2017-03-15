@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
+from util.hook import cmd
 
-def main(bot):
-    if bot.command == 'goodnight':
-        bot.say('おやすみなさい，よいゆめを')
-    elif bot.command == 'hello':
-        bot.say('こんにちは')
+@cmd("goodnight")
+def goodnight(bot):
+    bot.say('おやすみなさい，よいゆめを')
+
+@cmd("hello")
+def hello(bot):
+    bot.say('こんにちは')

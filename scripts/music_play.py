@@ -1,35 +1,35 @@
 # -*- coding: utf-8 -*-
+from util.hook import cmd
 import os
 import time
 import subprocess
 
 home_path =  os.environ['HOME']
 
-# TODO pathを削除
-unicorn_path = home_path + 'music/unicooooooon.wav'
-tjm_path = home_path + 'maimai/play_tjm'
-elzup_path = home_path + 'maimai/play_elzup'
-shibomeu_path= home_path + 'maimai/play_shibomeu'
-miyano_path = home_path + 'music/miyano.mp3'
-#  dear_kiss_path = home_path + 'music/dk.mp3'
-#  transam_path = home_path + 'music/TRANS_AM.wav'
+@cmd("unicorn")
+def unicorn(bot):
+    unicorn_path = home_path + 'music/unicooooooon.wav'
+    play_music(bot, unicorn_path)
 
-def main(bot):
-    q = bot.command
-    if q == 'unicorn':
-        play_music(bot, unicorn_path)
-    elif q == 'stretch':
-        play_music(bot, miyano_path)
-    elif q == 'play_tjm':
-        play_tjm(bot)
-    elif q == 'play_elzup':
-        play_elzup(bot)
-    elif q == 'play_shibomeu':
-        play_shibomeu(bot)
-#    elif q == 'dear_kiss':
-#        play_music(dear_kiss_path)
-#    elif q == 'transam':
-#        play_music(transam_path)
+@cmd("stretch")
+def stretch(bot):
+    miyano_path = home_path + 'music/miyano.mp3'
+    play_music(bot, miyano_path)
+
+@cmd("play_tjm")
+def play_tjm(bot):
+    tjm_path = home_path + 'maimai/play_tjm'
+    play_tjm(bot)
+
+@cmd("play_elzup")
+def play_elzup(bot):
+    elzup_path = home_path + 'maimai/play_elzup'
+    play_elzup(bot)
+
+@cmd("play_shibomeu")
+def play_shibomeu(bot):
+    shibomeu_path= home_path + 'maimai/play_shibomeu'
+    play_shibomeu(bot)
 
 def play_music(bot, path):
     bot.stop_say()

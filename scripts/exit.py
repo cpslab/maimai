@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
+from util.hook import cmd
 
+@cmd("exit")
 def main(bot):
-    if bot.command == 'exit':
-        bot.say('まいまい 停止します')
+    bot.say('まいまい 停止します')

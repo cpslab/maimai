@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
+from util.hook import cmd
 from irkit import main as power_on
 
 timer_thread = None
 
-def main(bot):
-    if bot.command == 'tv_on':
-        bot.say("テレビをつけます")
-        power_on()
+@cmd('tv_on')
+def tv_on(bot):
+    bot.say("テレビをつけます")
+    power_on()
