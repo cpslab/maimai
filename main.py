@@ -3,7 +3,6 @@
 from __future__ import print_function
 import socket
 from contextlib import closing
-import commands
 import xml.etree.ElementTree as ET
 import datetime
 import time
@@ -12,7 +11,7 @@ import requests
 import os
 import sys
 sys.path.append("/home/pi")
-from irkit import main as power_on
+#from irkit import main as power_on
 from cpschromecast import CpsChromecast
 import urllib2
 
@@ -218,7 +217,7 @@ def start(q):
         screen_amagumo()
     elif q == 'tv_on':
         say("テレビをつけます")
-        power_on()
+        #power_on()
     elif q == 'timer_5m':
         say('5ふんタイマーをセットしました')
         timer_thread = threading.Timer(5 * 60, lambda: say('5ふんたちましたよ'))
