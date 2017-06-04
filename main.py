@@ -7,11 +7,17 @@ import xml.etree.ElementTree as ET
 import time
 import os
 import sys
+import io
+
+from bot import Bot
+
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+print(sys.getdefaultencoding())
+print(sys.stdout.encoding)
 
 sys.path.append("/home/pi")
 #from irkit import main as power_on
 from cpschromecast import CpsChromecast
-import urllib2
 
 # TODO
 sys.path.append("/home/pi")
@@ -33,7 +39,7 @@ def main():
     text_queue = ""
     separator = ".\n"
 
-    bot.say('まいまい起動しました')
+    bot.say(u'まいまい起動しました')
 
     while True:
         bufsize = 4096

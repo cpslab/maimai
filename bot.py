@@ -28,7 +28,7 @@ class Bot(object):
 
     def say(self, message):
         self.stop_say()
-        print('bot >: ' +  message)
+        # print('bot >: ' +  message)
         voice_process = subprocess.Popen([aques_path, message], stdout=subprocess.PIPE)
         subprocess.Popen(['aplay'], stdin=voice_process.stdout)
         # subprocess.Popen([python3_path, akane_path, message, "2.0", "1.4", "1.0", "1.0"])
