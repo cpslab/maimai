@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 from util.hook import cmd
 import time
+import os
 import requests
+
+home_path =  '/home/pi'
 
 # TODO 相対path
 kyoshitsu_path = home_path + 'music/kyoshitsu.mp3'
@@ -10,7 +13,7 @@ kyoshitsu_path = home_path + 'music/kyoshitsu.mp3'
 coffee_host = os.getenv('COFFEE_HOST')
 
 @cmd('coffee_run')
-def coffee_run(bot)
+def coffee_run(bot):
     try:
         bot.say('おいしいコーヒーを入れますね')
         time.sleep(4)

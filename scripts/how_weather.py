@@ -3,7 +3,7 @@ from util.hook import cmd
 import os
 import subprocess
 
-home_path =  os.environ['HOME']
+home_path = '/home/pi'
 weather_cache_path = os.path.join(home_path, 'weather', 'today_weather_cache.txt')
 
 @cmd("how_weather")

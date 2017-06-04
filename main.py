@@ -16,7 +16,10 @@ sys.path.append("/home/pi")
 # TODO what?
 time.sleep(5)
 
-home_path = os.environ['HOME']
+home_path = '/home/pi'
+
+bot = Bot()
+is_state_recieve = False
 
 def main():
     host = 'localhost'
@@ -26,16 +29,13 @@ def main():
 
     text_queue = ""
     separator = ".\n"
-    is_state_recieve = False
-
-    bot = Bot()
 
     bot.say('まいまい起動しました')
 
     while True:
         bufsize = 4096
         recv_data = sock.recv(4096)
-        text_queue += recv_data
+        text_queue += recv_data.decode('utf-8')
         if separator in text_queue:
             parts = text_queue.split(separator)
             xmls, text_queue = parts[:-1], parts[-1]
@@ -46,7 +46,7 @@ def search_xmls(xmls):
     for xml_text in xmls:
         try:
             root = ET.fromstring(xml_text)
-            commands_loop(root)
+            dispatch_command(root)
         except ET.ParseError:
             print()
             print('parce error--')
@@ -54,6 +54,7 @@ def search_xmls(xmls):
             print('--')
 
 def dispatch_command(root):
+    global is_state_recieve
     for word in root.iter('WHYPO'):
         command = word.get('WORD')
         cm = float(word.get('CM'))
@@ -76,6 +77,7 @@ def dispatch_command(root):
                 bot.say('え？')
                 break
             else:
+                print('>>>' + command)
                 bot.listen(command)
                 is_state_recieve = False
 
@@ -85,4 +87,4 @@ if __name__ == '__main__':
     except:
         import traceback
         traceback.print_exc()
-        bot.listen('exit')
+        # bot.listen('exit')

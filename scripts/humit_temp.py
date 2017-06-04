@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from util.hook import cmd
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 
 def fetchAPI():
-    res = urllib2.urlopen('http://192.168.1.172')
+    res = urllib.request.urlopen('http://192.168.1.172')
     return res.read().split(url)
 
 @cmd("now_humid")

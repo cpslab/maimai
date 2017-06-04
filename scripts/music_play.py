@@ -4,7 +4,7 @@ import os
 import time
 import subprocess
 
-home_path =  os.environ['HOME']
+home_path = '/home/pi'
 
 @cmd("unicorn")
 def unicorn(bot):

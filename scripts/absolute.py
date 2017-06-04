@@ -2,7 +2,7 @@
 import os
 import subprocess
 
-home_path =  os.environ['HOME']
+home_path =  '/home/pi'
 absolute_script_path = os.path.join(home_path, 'run_duo.py')
 
 def run_absolute():
