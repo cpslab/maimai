@@ -11,7 +11,7 @@ import io
 
 from bot import Bot
 
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+# sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 print(sys.getdefaultencoding())
 print(sys.stdout.encoding)
 
