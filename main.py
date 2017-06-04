@@ -88,9 +88,11 @@ def shutup():
 def say(message):
     shutup()
     print('echo >: ' +  message)
+    voice_process = subprocess.Popen([aques_path] + message.split(), stdout=subprocess.PIPE)
     # subprocess.Popen([python3_path, aques_path, message])
     # voice_process = subprocess.Popen([python3_path, akane_path] + message.split(), stdout=subprocess.PIPE)
-    subprocess.Popen([python3_path, akane_path, message, "2.0", "1.4", "1.0", "1.0"])
+    #subprocess.Popen([python3_path, akane_path, message, "2.0", "1.4", "1.0", "1.0"])
+    subprocess.Popen(['/usr/bin/aplay'], stdin=voice_process.stdout)
     return 'message: ' + message
 
 def run_absolute():
