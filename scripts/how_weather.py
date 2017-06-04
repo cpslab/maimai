@@ -11,5 +11,5 @@ def how_weather(bot):
     print('weather')
     p = subprocess.Popen(['cat', weather_cache_path], stdout=subprocess.PIPE)
     p.wait()
-    stdout_data = p.stdout.read()
+    stdout_data = p.stdout.read().decode('utf-8')
     bot.say(stdout_data)

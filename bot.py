@@ -29,21 +29,21 @@ class Bot(object):
     def say(self, message):
         self.stop_say()
         print('bot >: ' +  message)
-        voice_process = subprocess.Popen([aques_path] + message.split(), stdout=subprocess.PIPE)
+        voice_process = subprocess.Popen([aques_path, message], stdout=subprocess.PIPE)
         subprocess.Popen(['aplay'], stdin=voice_process.stdout)
         # subprocess.Popen([python3_path, akane_path, message, "2.0", "1.4", "1.0", "1.0"])
 
     def listen(self, cmd):
-        self.cmd = cmd  
         for l in self.listeners:
-            if hasattr(l, "_command"):
-                try:
-                    if l._command == self.cmd:
-                        l(self)
-                    else:
-                        l(self)
-                except Exception as e:
-                    print(e)
+            if not hasattr(l, "_command"):
+                continue
+            try:
+                if l._command == cmd:
+                    self.cmd = cmd  
+                    l(self)
+                    break
+            except Exception as e:
+                print(e)
 
     def _load_scripts(self):
         sys.path += ['scripts']
